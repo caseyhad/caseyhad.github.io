@@ -1,3 +1,7 @@
+layout: page
+title: "Tutorial"
+permalink: /Tutorial
+
 <!DOCTYPE html>
 <html>
 <head>

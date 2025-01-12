@@ -28,8 +28,6 @@ In this short guide, you will build your own small-scale temperature controlled 
 
 <h1>PID Background</h1>
 <p>PID control (Proportional, Integral, Derivative control), is an algorithm that takes some process variable such as temperature, and generates a desired output such as heater voltage. Under feedback control, the output of the controller (heater voltage), affects the input to the controller (temperature). The algorithm used by the controller is called the control law and has the following form:
-<script src=""></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 $$\mathrm{K}_{p}e(t) + \mathrm{K}_{i}\int_{0}^{t}e(\tau)d\tau + \mathrm{K}_{d}\frac{d }{dt}(e(t))$$
 

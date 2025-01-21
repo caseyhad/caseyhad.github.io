@@ -10,10 +10,11 @@ title: Arduino Temperture Controller
 </head>
 <body>
 
+<div style="width:700px;overflow:auto">
 <h1>Arduino Temperature Controller</h1>
 <p>Say you are a preocess engineer at a brewery, and you need to design a reactor to brew beer at precisly 65&deg;C. However, as part of the brewing process ingrediants are added to the fermenting vessel which drop the temperature. To regain the 65&deg;C brewing temperature you are in need of a temperature controller. 
 
-In this short guide, you will build your own small-scale temperature controlled process, and learn how to tune the controller for stable output. </p>
+In this short guide, you will build your own small-scale temperature controlled process, and learn how to tude the controller for stable output. </p>
 
 <h1>What you will need:</h1>
  <ul>
@@ -39,6 +40,28 @@ Where e(t) is the error function, which is defined as the set point minus the pr
 
 Your TMP36 will have three pins: power, data and ground. The power pin may use either +5v or +3.3v. 
 
-The sensor will supply a small voltage to the data pin which is linearly dependant to the temperature of the sensor. 
+The sensor will supply a small voltage to the data pin which is linearly dependant to the temperature of the sensor, in order to convert the voltage to temperature reading, you will need to write a simple conversion function. Try it yourself by using the TMP35 specification sheet (<a href="https://www.analog.com/media/en/technical-documentation/data-sheets/TMP35_36_37.pdf">here</a>), you can also look at the sample code below to get an idea. The arduino provides a value from 0 to 1024 that corrosponds to the analog signal, so for example if the value is 500, and the sensor is being supplied 3.3V, the sensor is outputting around 1.7 volts. 
+<pre>
+  //Define a function that maps analog signal to degrees F 
+  double ConvertToF(int sensorValue, float sensorVin){
+    //convert the sensor output to a voltage reading
+    float voltage = sensorValue * sensorVin / 1024;
+    float tempC = voltage/0.01 - 33; //from the TMP36 datasheet 
+    float tempF = (tempC * 1.8) + 32;
+    return tempF;
+  }
+</pre>
+note: this code should be outside the loop() as you only need to define his function once. 
+<p>
+Now we can set up the temperature sensor in the breadboard, heres how to do it:
+</p>
+<pre>
+	<img src="https://github.com/caseyhad/caseyhad.github.io/blob/main/Pictures/Temperature_sensor_circut.png?raw=true" alt="alternatetext"style="width:200px;height:200px;">  <img src="https://github.com/caseyhad/caseyhad.github.io/blob/main/Pictures/tmp_io_pins.png?raw=true" alt="alternatetext"style="width:200px;height:200px;">
+</pre>
+<p>
+To start taking temperature readings, you will need to begin the serial connection to the arduino, then in the loop() section, you will call the temperature conversion function and print the result. See the final script for reference. 
+<p>
+
+</div>
 </body>
 </html>
